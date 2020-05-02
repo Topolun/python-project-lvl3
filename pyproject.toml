@@ -1,14 +1,20 @@
 [tool.poetry]
 name = "topolun_page_loader"
-version = "0.1.0"
+version = "0.1.1"
 description = "Download page"
-authors = ["Your Name <you@example.com>"]
+authors = ["Topolun <you@example.com>"]
 packages = [  { include = "page_loader" }, ]
 
 [tool.poetry.dependencies]
 python = "^3.6"
+requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
+flake8 = "^3.7"
+pytest = "^5.3.5"
+
+[tool.poetry.scripts]
+page_loader = "page_loader.scripts.page_loader:main"
 
 [build-system]
 requires = ["poetry>=0.12"]
