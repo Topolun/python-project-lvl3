@@ -12,9 +12,6 @@ run:
 test:
 	poetry run pytest
 
-test_cover:
-	poetry run pytest --cov=page_loader tests/ --cov-report xml
-
 test_a:
 	poetry run pytest -vv
 

@@ -10,11 +10,10 @@ before_script:
 
 before_install: 
     - pip install poetry
-    - pip install pytest-cov
     
 script: 
     - make lint
-    - make test_cover
+    - make test
 
 after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
