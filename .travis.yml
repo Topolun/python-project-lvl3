@@ -10,10 +10,12 @@ before_script:
 
 before_install: 
     - pip install poetry
+    - poetry add pytest-cov
     
 script: 
     - make lint
     - make test
+    - poetry run pytest --cov=page_loader tests/ --cov-report xml
 
 after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
