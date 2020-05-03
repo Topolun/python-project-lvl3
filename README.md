@@ -10,6 +10,8 @@
 
 ## How it is works:
 
-- To download a page just run: `page_loader page_adress(http://...)`. It will save page in current directory.
-To save page in othe place, please add '--output path_to_save_file'.
+- To download a page just run: '`page_loader page_adress(http://...)`'. It will save page in current directory.
+To save page in othe place, please add '`--output path_to_save_file`'.
 
+
+[![asciicast](https://asciinema.org/a/Fa0Q6wvTF6Xm7iQ6Y6q5JztCa.svg)](https://asciinema.org/a/Fa0Q6wvTF6Xm7iQ6Y6q5JztCa)
