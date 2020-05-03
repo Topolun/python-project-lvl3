@@ -11,5 +11,5 @@
 ## How it is works:
 
 - To download a page just run: `page_loader page_adress(http://...)`. It will save page in current directory.
-To save page in othe plase, please add `--output path_to_save_file`.
+To save page in othe place, please add '--output path_to_save_file'.
 

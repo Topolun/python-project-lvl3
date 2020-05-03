@@ -16,4 +16,7 @@ def run(data, output):
     url_path = url.path.replace('/', '-')
     file_name = '{}{}.html'.format(url_host, url_path)
     create_file(file_name, page_data.text, output)
-    return file_name
+    message = "File '{}' saved at path '{}'".format(
+        file_name, os.path.abspath(output)
+        )
+    return message
