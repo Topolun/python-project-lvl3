@@ -26,9 +26,9 @@ def create_dir(dir_path):
 def get_name(page_adress, output='file'):
     url = urllib.parse.urlparse(page_adress)
     url_host = url.hostname
-    if url_host == '':
+    if url_host == None:
         url_host = 'ru.hexlet.io'
-    url_host = url.hostname.replace('.', '-')
+    url_host = url_host.replace('.', '-')
     url_path = url.path.replace('/', '-')
     ext = os.path.splitext(url_path)[1]
     end = '.html'
@@ -40,16 +40,20 @@ def get_name(page_adress, output='file'):
     return name
 
 
-def content_download(tag, path=''):
-    for key, value in SELECTORS.items():
-        if tag.name == key and tag.has_attr(value):
-            adress = tag[value]
-            print('ADRESS', adress)
-            data = requests.get(adress)
-            name = get_name(adress, path)
-            create_file(name, data.text, path)
-            #tag[value] = '&&&'
-            return True
+def change_path_to_local(path, local_path):
+    url = urllib.parse.urlparse(path)
+    name = get_name(url.path)
+    return '{}/{}'.format(local_path, name)
+
+
+def path_normalize_for_download(path, page_adress):
+    return urllib.parse.urljoin(page_adress, path)
+
+def content_filter(tag):
+    name = tag.name
+    attr = SELECTORS.get(name)
+    return name in SELECTORS and tag.has_attr(attr)
+
 
 def run(data, output):
     page_adress, page_data = data
@@ -58,10 +62,16 @@ def run(data, output):
     dir_name = get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     create_dir(dir_path)
-    print(dir_path)
-    selector = lambda x: content_download(x, path=dir_path)
     soup = BeautifulSoup(page_data.content)
-    soup.find_all(selector)
+    tags = soup.find_all(content_filter)
+    for tag in tags:
+        attr = SELECTORS.get(tag.name)
+        normalized_path = path_normalize_for_download(tag[attr], page_adress)
+        create_file(get_name(normalized_path), requests.get(normalized_path).text, dir_path)
+        tag[attr] = change_path_to_local(normalized_path, dir_path)
+        print(tag[attr])
+    file_name = get_name(page_adress)
+    create_file(file_name, str(soup), output)
     message = "Data saved at path: '{}'\nwith name: '{}'".format(
         os.path.abspath(output), file_name
         )
