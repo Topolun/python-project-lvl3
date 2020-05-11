@@ -10,7 +10,9 @@ def get_args():
         default='.', help='path to save a file'
         )
     parser.add_argument(
-        'page_adress', type=check_page_availability, help='adress of page for download'
+        'page_adress',
+        type=check_page_availability,
+        help='adress of page for download'
         )
     args = parser.parse_args()
     return args
@@ -20,7 +22,7 @@ def check_path(path):
     if os.path.isdir(path):
         return path
     else:
-        message = "\nPath: '{}' is not exist. Please choose correct one".format(
+        message = "\nPath: '{}' isn't exist. Please choose correct one".format(
             path)
         raise argparse.ArgumentTypeError(message)
 
@@ -35,4 +37,3 @@ def check_page_availability(page_adress):
         \rOops, something goes wrong with connection. Error code is {}\
         '''.format(status)
         raise argparse.ArgumentTypeError(message)
-
