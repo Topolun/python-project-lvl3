@@ -16,7 +16,7 @@ def run(data, output):
     dir_name = modifiers.get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     modifiers.create_dir(dir_path)
-    page_soup = BeautifulSoup(page_data.content)
+    page_soup = BeautifulSoup(page_data.content, features="html.parser")
     tags = page_soup.find_all(content_filter)
     for tag in tags:
         attr = SELECTORS.get(tag.name)
