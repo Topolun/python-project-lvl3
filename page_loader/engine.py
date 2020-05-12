@@ -16,8 +16,8 @@ def run(data, output):
     dir_name = modifiers.get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     modifiers.create_dir(dir_path)
-    soup = BeautifulSoup(page_data.content)
-    tags = soup.find_all(content_filter)
+    page_soup = BeautifulSoup(page_data.content)
+    tags = page_soup.find_all(content_filter)
     for tag in tags:
         attr = SELECTORS.get(tag.name)
         normalized_path = modifiers.path_normalize_for_download(
@@ -31,8 +31,8 @@ def run(data, output):
             )
         tag[attr] = modifiers.change_path_to_local(file_name, dir_path)
     file_name = modifiers.get_name(page_adress)
-    modifiers.create_file(file_name, str(soup), output)
-    message = "Data saved at path: '{}'\nwith name: '{}'".format(
+    modifiers.create_file(file_name, str(page_soup), output)
+    message = "Page saved at path: '{}'\nwith name: '{}'".format(
         os.path.abspath(output), file_name
         )
     return message

@@ -13,7 +13,6 @@ def get_name(page_adress, output='file'):
     elif ext != '':
         end = ''
     name = '{}{}{}'.format(url_host, url_path, end)
-    print('Name: ---- ', name)
     return name
 
 
