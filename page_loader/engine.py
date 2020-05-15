@@ -1,6 +1,7 @@
-import requests
+import logging
 import os
 from page_loader import modifiers
+from page_loader import cli
 from bs4 import BeautifulSoup
 
 
@@ -19,14 +20,16 @@ def run(data, output):
     page_soup = BeautifulSoup(page_data.content, features="html.parser")
     tags = page_soup.find_all(content_filter)
     for tag in tags:
+        logging.warning('download from tag %s' % tag)
         attr = SELECTORS.get(tag.name)
         normalized_path = modifiers.path_normalize_for_download(
             tag[attr], page_adress
             )
         file_name = modifiers.get_name(normalized_path)
+        file_data = cli.check_page_availability(normalized_path)
         modifiers.create_file(
             file_name,
-            requests.get(normalized_path).content,
+            file_data[1].content,
             dir_path
             )
         tag[attr] = modifiers.change_path_to_local(file_name, dir_path)
@@ -35,6 +38,7 @@ def run(data, output):
     message = "Page saved at path: '{}'\nwith name: '{}'".format(
         os.path.abspath(output), file_name
         )
+    logging.info('Logging:\n%s' % message)
     return message
 
 
