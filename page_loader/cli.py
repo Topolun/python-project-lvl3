@@ -2,6 +2,8 @@ import argparse
 import requests
 import os
 import logging
+import sys
+
 
 LOG_LEVELS = {
     'CRITICAL': logging.CRITICAL,
@@ -16,7 +18,7 @@ def get_args():
     parser = argparse.ArgumentParser(description='Page load')
     parser.add_argument(
         '-L', '--log', type=set_log,
-        default='CRITICAL', help="Set level of the log's messages"
+        default='ERROR', help="Set level of the log's messages"
         )
     parser.add_argument(
         '-o', '--output', type=check_path,
@@ -47,20 +49,24 @@ def check_path(path):
     if os.path.isdir(path):
         return path
     else:
-        logging.critical('Path does not exist')
+        logging.critical("Path '%s' does not exist" % path)
+        logging.error("Path '%s' does not exist" % path)
         message = "Path '{}' does not exist. Please choose correct one".format(
             path)
         raise argparse.ArgumentTypeError(message)
 
 
-def check_page_availability(page_adress):
-    page_data = requests.get(page_adress)
-    status = page_data.status_code
-    if status == 200:
-        return page_adress, page_data
-    else:
-        logging.critical('Connection failed')
-        message = '''
-        \rOops, something goes wrong with connection. Error code is {}\
-        '''.format(status)
-        raise argparse.ArgumentTypeError(message)
+def check_page_availability(page_adress, option='start'):
+    try:
+        page_data = requests.get(page_adress)
+        status = page_data.status_code
+        if status == 200:
+            return page_adress, page_data
+        else:
+            message = "Connection error, code is {}".format(status)
+            raise argparse.ArgumentTypeError(message)
+    except requests.RequestException as err:
+        logging.debug("Connection to  '%s' failed.\n%s", page_adress, err)
+        logging.error("Connection to  '%s' failed.", page_adress)
+        if option == 'start':
+            sys.exit(1)

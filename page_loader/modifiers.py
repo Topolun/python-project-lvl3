@@ -1,5 +1,7 @@
 import urllib
 import os
+import logging
+import sys
 
 
 def get_name(page_adress, output='file'):
@@ -29,10 +31,22 @@ def create_file(file_name, data='', path=''):
     open_method = 'wb'
     if isinstance(data, str):
         open_method = 'w'
-    with open(new_path, open_method) as new_file:
-        new_file.write(data)
+    try:
+        with open(new_path, open_method) as new_file:
+            new_file.write(data)
+    except PermissionError as err:
+        logging.debug("No write access to create '%s'\n%s", file_name, err)
+        logging.error("You have no write access to create '%s'", file_name)
+        sys.exit(1)
 
 
 def create_dir(dir_path):
     if not os.path.isdir(dir_path):
-        os.mkdir(dir_path)
+        try:
+            os.mkdir(dir_path)
+        except PermissionError as err:
+            logging.debug(
+                "No write access to create '%s'\n%s", dir_path, err
+                )
+            logging.error("You have no write access to create '%s'", dir_path)
+            sys.exit(1)
