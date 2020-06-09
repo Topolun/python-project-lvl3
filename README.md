@@ -27,3 +27,7 @@ To save page in othe place, please add '`--output path_to_save_file`'.
     page_loader https://hexlet.io/courses --log INFO
 
 [![asciicast](https://asciinema.org/a/UoEl5SuNZWzS1IFDcuyAlYsDZ.svg)](https://asciinema.org/a/UoEl5SuNZWzS1IFDcuyAlYsDZ)
+
+- If something goes wrong, this cli inform you about that.
+
+[![asciicast](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY.svg)](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY)
