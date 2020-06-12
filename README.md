@@ -31,3 +31,8 @@ To save page in othe place, please add '`--output path_to_save_file`'.
 - If something goes wrong, this cli inform you about that.
 
 [![asciicast](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY.svg)](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY)
+
+
+- You can see a progress of the download as progress bar
+
+[![asciicast](https://asciinema.org/a/6yU7WvspOpyNKpXCHzx8lAWlV.svg)](https://asciinema.org/a/6yU7WvspOpyNKpXCHzx8lAWlV)
