@@ -3,6 +3,7 @@ import os
 from page_loader import modifiers
 from page_loader import cli
 from bs4 import BeautifulSoup
+from progress.bar import Bar
 
 
 SELECTORS = {
@@ -19,6 +20,7 @@ def run(data, output):
     modifiers.create_dir(dir_path)
     page_soup = BeautifulSoup(page_data.content, features="html.parser")
     tags = page_soup.find_all(content_filter)
+    bar = Bar('Processing', max=len(tags))
     for tag in tags:
         logging.warning('download from tag %s' % tag)
         attr = SELECTORS.get(tag.name)
@@ -33,6 +35,8 @@ def run(data, output):
             dir_path
             )
         tag[attr] = modifiers.change_path_to_local(file_name, dir_path)
+        bar.next()
+    bar.finish()
     file_name = modifiers.get_name(page_adress)
     modifiers.create_file(file_name, str(page_soup), output)
     message = "Page saved at path: '{}'\nwith name: '{}'".format(

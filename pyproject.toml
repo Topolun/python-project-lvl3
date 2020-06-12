@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "topolun_page_loader"
-version = "0.2.3"
+version = "0.2.4"
 description = "Download page"
 authors = ["Topolun <you@example.com>"]
 packages = [  { include = "page_loader" }, ]
@@ -9,6 +9,7 @@ packages = [  { include = "page_loader" }, ]
 python = "^3.6"
 requests = "^2.23.0"
 beautifulsoup4 = "^4.9.0"
+progress = "^1.5"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7"
