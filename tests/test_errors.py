@@ -23,7 +23,7 @@ def test_write_access_dir():
     with pytest.raises(SystemExit):
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
-            new_path = '{}/test_dir'.format(tmp_dir)
+            new_path = os.path.join(tmp_dir, 'test_dir')
             modifiers.create_dir(new_path)
 
 
