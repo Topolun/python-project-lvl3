@@ -10,8 +10,8 @@ import stat
 
 
 def test_page_availability():
-    with pytest.raises(SystemExit):
-        cli.check_page_availability('https://hex', option='start')
+    with pytest.raises(argparse.ArgumentTypeError):
+        cli.check_page_availability('https://httpbin.org/status/400', option='start')
 
 
 def test_directory_availability():
