@@ -5,7 +5,7 @@ from page_loader import cli
 
 def main():
     args = cli.get_args()
-    print(engine.run(args.page_adress, args.output))
+    engine.run(args.page_adress, args.output)
     logging.info('Work is finished')
 
 
