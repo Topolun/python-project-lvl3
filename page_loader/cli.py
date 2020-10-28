@@ -29,8 +29,7 @@ def get_args():
         type=check_page_availability,
         help='adress of page for download'
         )
-    args = parser.parse_args()
-    return args
+    return parser
 
 
 def set_log(log_level):
