@@ -1,7 +1,6 @@
 import logging
 from page_loader import engine
 from page_loader import cli
-import argparse
 
 
 def main():
