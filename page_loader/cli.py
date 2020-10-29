@@ -17,7 +17,7 @@ LOG_LEVELS = {
 def get_args():
     parser = argparse.ArgumentParser(description='Page load')
     parser.add_argument(
-        '-L', '--log', type=set_log,
+        '-L', '--log',
         default='ERROR', help="Set level of the log's messages"
         )
     parser.add_argument(
