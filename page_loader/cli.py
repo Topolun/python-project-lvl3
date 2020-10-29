@@ -21,12 +21,12 @@ def get_args():
         default='ERROR', help="Set level of the log's messages"
         )
     parser.add_argument(
-        '-o', '--output', type=check_path,
+        '-o', '--output', type=path,
         default='.', help='path to save a file'
         )
     parser.add_argument(
         'page_adress',
-        type=check_page_availability,
+        type=page_availability,
         help='adress of page for download'
         )
     return parser
@@ -44,7 +44,7 @@ def set_log(log_level):
         raise argparse.ArgumentTypeError(message)
 
 
-def check_path(path):
+def path(path):
     if os.path.isdir(path):
         return path
     else:
@@ -55,7 +55,7 @@ def check_path(path):
         raise argparse.ArgumentTypeError(message)
 
 
-def check_page_availability(page_adress, option='start'):
+def page_availability(page_adress, option='start'):
     try:
         page_data = requests.get(page_adress)
         status = page_data.status_code

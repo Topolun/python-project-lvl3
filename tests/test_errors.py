@@ -11,12 +11,12 @@ import stat
 
 def test_page_availability():
     with pytest.raises(argparse.ArgumentTypeError):
-        cli.check_page_availability('https://httpbin.org/status/400', option='start')
+        cli.page_availability('https://httpbin.org/status/400', option='start')
 
 
 def test_directory_availability():
     with pytest.raises(argparse.ArgumentTypeError):
-        cli.check_path('u://asdasdsa/dasasdqw/324')
+        cli.path('u://asdasdsa/dasasdqw/324')
 
 
 def test_write_access_dir():

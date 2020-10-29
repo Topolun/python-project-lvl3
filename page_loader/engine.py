@@ -28,7 +28,7 @@ def run(data, output):
             tag[attr], page_adress
             )
         file_name = modifiers.get_name(normalized_path)
-        file_data = cli.check_page_availability(normalized_path)
+        file_data = cli.page_availability(normalized_path)
         modifiers.create_file(
             file_name,
             file_data[1].content,
