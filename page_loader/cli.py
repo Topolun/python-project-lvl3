@@ -26,7 +26,6 @@ def get_args():
         )
     parser.add_argument(
         'page_adress',
-        type=page_availability,
         help='adress of page for download'
         )
     return parser
@@ -60,7 +59,7 @@ def page_availability(page_adress, option='start'):
         page_data = requests.get(page_adress)
         status = page_data.status_code
         if status == 200:
-            return page_adress, page_data
+            return page_data
         else:
             message = "Connection error, code is {}".format(status)
             raise argparse.ArgumentTypeError(message)

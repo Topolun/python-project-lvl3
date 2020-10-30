@@ -14,7 +14,8 @@ SELECTORS = {
 
 
 def run(data, output):
-    page_adress, page_data = data
+    page_adress = data
+    page_data = cli.page_availability(data)
     dir_name = modifiers.get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     modifiers.create_dir(dir_path)
@@ -31,7 +32,7 @@ def run(data, output):
         file_data = cli.page_availability(normalized_path)
         modifiers.create_file(
             file_name,
-            file_data[1].content,
+            file_data.content,
             dir_path
             )
         tag[attr] = modifiers.change_path_to_local(file_name, dir_path)
