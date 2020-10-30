@@ -6,7 +6,7 @@
 
 **To install this CLI please enter in the command line:**
 
-    pip install -i https://test.pypi.org/simple/ topolun_page_loader --extra-index-url https://pypi.org/simple
+    pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple topolun_page_loader
 
 ## How it is works:
 
