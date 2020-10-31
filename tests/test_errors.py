@@ -33,4 +33,7 @@ def test_write_access_file():
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = '{}/test_dir'.format(tmp_dir)
-            modifiers.create_file('test_file_rec', '22', new_path)
+            modifiers.write_file(
+                os.path.join(new_path, 'test_file_rec'),
+                '22',
+                )

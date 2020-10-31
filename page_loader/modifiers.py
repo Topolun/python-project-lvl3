@@ -22,17 +22,16 @@ def path_normalize_for_download(path, page_adress):
     return urllib.parse.urljoin(page_adress, path)
 
 
-def create_file(file_name, data='', path=''):
-    new_path = os.path.join(path, file_name)
+def write_file(path, data=''):
     open_method = 'wb'
     if isinstance(data, str):
         open_method = 'w'
     try:
-        with open(new_path, open_method) as new_file:
+        with open(path, open_method) as new_file:
             new_file.write(data)
     except PermissionError as err:
-        logging.debug("No write access to create '%s'\n%s", file_name, err)
-        logging.error("You have no write access to create '%s'", file_name)
+        logging.debug("No write access to create '%s'\n%s", path, err)
+        logging.error("You have no write access to create '%s'", path)
         sys.exit(1)
 
 

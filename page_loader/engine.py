@@ -31,16 +31,18 @@ def run(data, output):
             )
         file_name = modifiers.get_name(normalized_path)
         file_data = page_availability(normalized_path)
-        modifiers.create_file(
-            file_name,
+        modifiers.write_file(
+            os.path.join(dir_path, file_name),
             file_data.content,
-            dir_path
             )
         tag[attr] = os.path.join(dir_path, file_name)
         bar.next()
     bar.finish()
     file_name = modifiers.get_name(page_adress)
-    modifiers.create_file(file_name, str(page_soup), output)
+    modifiers.write_file(
+        os.path.join(output, file_name),
+        str(page_soup),
+        )
     message = "Page saved at path: '{}'\nwith name: '{}'".format(
         os.path.abspath(output), file_name
         )
