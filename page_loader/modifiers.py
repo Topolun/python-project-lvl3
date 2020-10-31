@@ -32,7 +32,7 @@ def write_file(path, data=''):
     except PermissionError as err:
         logging.debug("No write access to create '%s'\n%s", path, err)
         logging.error("You have no write access to create '%s'", path)
-        sys.exit(1)
+        raise PermissionError
 
 
 def create_dir(dir_path):

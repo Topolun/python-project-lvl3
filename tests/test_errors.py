@@ -29,7 +29,7 @@ def test_write_access_dir():
 
 
 def test_write_access_file():
-    with pytest.raises(SystemExit):
+    with pytest.raises(PermissionError):
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = '{}/test_dir'.format(tmp_dir)
