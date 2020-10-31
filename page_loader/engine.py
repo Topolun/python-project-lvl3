@@ -36,7 +36,7 @@ def run(data, output):
             file_data.content,
             dir_path
             )
-        tag[attr] = modifiers.change_path_to_local(file_name, dir_path)
+        tag[attr] = os.path.join(dir_path, file_name)
         bar.next()
     bar.finish()
     file_name = modifiers.get_name(page_adress)

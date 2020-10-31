@@ -18,10 +18,6 @@ def get_name(page_adress, output='file'):
     return name
 
 
-def change_path_to_local(file_name, local_path):
-    return '{}/{}'.format(local_path, file_name)
-
-
 def path_normalize_for_download(path, page_adress):
     return urllib.parse.urljoin(page_adress, path)
 
