@@ -6,17 +6,18 @@ import os
 import tempfile
 from page_loader import modifiers
 from page_loader import cli
+from page_loader import engine
 import stat
 
 
 def test_page_availability():
-    with pytest.raises(argparse.ArgumentTypeError):
-        cli.page_availability('https://httpbin.org/status/400', option='start')
+    with pytest.raises(AttributeError):
+        engine.page_availability('https://httpbin.org/status/400', option='start')
 
 
 def test_directory_availability():
-    with pytest.raises(argparse.ArgumentTypeError):
-        cli.path('u://asdasdsa/dasasdqw/324')
+    with pytest.raises(AttributeError):
+        engine.path('u://asdasdsa/dasasdqw/324')
 
 
 def test_write_access_dir():

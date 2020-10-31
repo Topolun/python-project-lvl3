@@ -8,7 +8,7 @@ def get_name(page_adress, output='file'):
     url = urllib.parse.urlparse(page_adress)
     url_host = url.hostname.replace('.', '-')
     url_path = url.path.replace('/', '-')
-    ext = os.path.splitext(url_path)[1]
+    _, ext = os.path.splitext(url_path)
     end = '.html'
     if output == 'dir':
         end = '_files'
