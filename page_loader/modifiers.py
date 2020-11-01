@@ -1,7 +1,6 @@
 import urllib
 import os
-import logging
-import sys
+from page_loader.errors import KnownError
 
 
 def get_name(page_adress, output='file'):
@@ -29,19 +28,17 @@ def write_file(path, data=''):
     try:
         with open(path, open_method) as new_file:
             new_file.write(data)
-    except PermissionError as err:
-        logging.debug("No write access to create '%s'\n%s", path, err)
-        logging.error("You have no write access to create '%s'", path)
-        raise PermissionError
+    except IOError as err:
+        raise KnownError(
+            "can't write file {}".format(path)
+        ) from err
 
 
 def create_dir(dir_path):
     if not os.path.isdir(dir_path):
         try:
             os.mkdir(dir_path)
-        except PermissionError as err:
-            logging.debug(
-                "No write access to create '%s'\n%s", dir_path, err
-                )
-            logging.error("You have no write access to create '%s'", dir_path)
-            sys.exit(1)
+        except IOError as err:
+            raise KnownError(
+                "can't write file {}".format(dir_path)
+            ) from err

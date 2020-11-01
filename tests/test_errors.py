@@ -8,6 +8,7 @@ from page_loader import modifiers
 from page_loader import cli
 from page_loader import engine
 import stat
+from page_loader.errors import KnownError
 
 
 def test_page_availability():
@@ -21,7 +22,7 @@ def test_directory_availability():
 
 
 def test_write_access_dir():
-    with pytest.raises(SystemExit):
+    with pytest.raises(KnownError):
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = os.path.join(tmp_dir, 'test_dir')
@@ -29,7 +30,7 @@ def test_write_access_dir():
 
 
 def test_write_access_file():
-    with pytest.raises(PermissionError):
+    with pytest.raises(KnownError):
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = '{}/test_dir'.format(tmp_dir)
