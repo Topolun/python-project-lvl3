@@ -4,7 +4,6 @@ import sys
 import requests
 import os
 import tempfile
-from page_loader import modifiers
 from page_loader import cli
 from page_loader import engine
 import stat
@@ -26,7 +25,7 @@ def test_write_access_dir():
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = os.path.join(tmp_dir, 'test_dir')
-            modifiers.create_dir(new_path)
+            engine.create_dir(new_path)
 
 
 def test_write_access_file():
@@ -34,7 +33,7 @@ def test_write_access_file():
         with tempfile.TemporaryDirectory() as tmp_dir:
             os.chmod(tmp_dir, stat.S_IRUSR)
             new_path = '{}/test_dir'.format(tmp_dir)
-            modifiers.write_file(
+            engine.write_file(
                 os.path.join(new_path, 'test_file_rec'),
                 '22',
                 )
