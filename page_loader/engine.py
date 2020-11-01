@@ -16,7 +16,7 @@ SELECTORS = {
 
 def run(data, output):
     page_adress = data
-    page_data = page_availability(data)
+    page_data = page_load(data)
     dir_name = modifiers.get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     modifiers.create_dir(dir_path)
@@ -30,7 +30,7 @@ def run(data, output):
             tag[attr], page_adress
             )
         file_name = modifiers.get_name(normalized_path)
-        file_data = page_availability(normalized_path)
+        file_data = page_load(normalized_path)
         modifiers.write_file(
             os.path.join(dir_path, file_name),
             file_data.content,
@@ -66,7 +66,7 @@ def path(path):
             )
 
 
-def page_availability(page_adress):
+def page_load(page_adress):
     try:
         page_data = requests.get(page_adress)
         status = page_data.status_code

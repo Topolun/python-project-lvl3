@@ -11,9 +11,9 @@ import stat
 from page_loader.errors import KnownError
 
 
-def test_page_availability():
+def test_page_load():
     with pytest.raises(KnownError):
-        engine.page_availability('https://httpbin.org/status/400')
+        engine.page_load('https://httpbin.org/status/400')
 
 
 def test_directory_availability():
