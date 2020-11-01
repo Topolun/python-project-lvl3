@@ -1,10 +1,10 @@
 import logging
 import os
-import sys
 from page_loader import modifiers
 from bs4 import BeautifulSoup
 from progress.bar import Bar
 import requests
+from page_loader.errors import KnownError
 
 
 SELECTORS = {
@@ -60,24 +60,29 @@ def path(path):
     if os.path.isdir(path):
         return path
     else:
-        logging.critical("Path '%s' does not exist" % path)
-        logging.error("Path '%s' does not exist" % path)
-        message = "Path '{}' does not exist. Please choose correct one".format(
-            path)
-        raise AttributeError(message)
+        raise KnownError(
+            "Path '{}' does not exist. Please choose correct one"
+            .format(path)
+            )
 
 
-def page_availability(page_adress, option='start'):
+def page_availability(page_adress):
     try:
         page_data = requests.get(page_adress)
         status = page_data.status_code
         if status == 200:
             return page_data
         else:
-            message = "Connection error, code is {}".format(status)
-            raise AttributeError(message)
-    except requests.RequestException as err:
-        logging.debug("Connection to  '%s' failed.\n%s", page_adress, err)
-        logging.error("Connection to  '%s' failed.", page_adress)
-        if option == 'start':
-            sys.exit(1)
+            raise KnownError(
+                "can't get access to the page {}. code is {}"
+                .format(
+                    page_adress,
+                    status,
+                    )
+            )
+    except IOError as err:
+        raise KnownError(
+            "can't get access to the page {}".format(
+                page_adress,
+                )
+            ) from err

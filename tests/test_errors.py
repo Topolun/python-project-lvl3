@@ -12,12 +12,12 @@ from page_loader.errors import KnownError
 
 
 def test_page_availability():
-    with pytest.raises(AttributeError):
-        engine.page_availability('https://httpbin.org/status/400', option='start')
+    with pytest.raises(KnownError):
+        engine.page_availability('https://httpbin.org/status/400')
 
 
 def test_directory_availability():
-    with pytest.raises(AttributeError):
+    with pytest.raises(KnownError):
         engine.path('u://asdasdsa/dasasdqw/324')
 
 
