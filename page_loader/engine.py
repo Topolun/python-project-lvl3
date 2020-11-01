@@ -13,9 +13,8 @@ SELECTORS = {
 }
 
 
-def run(data, output):
-    page_adress = data
-    page_data = page_load(data)
+def run(page_adress, output):
+    page_data = page_load(page_adress)
     dir_name = get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     create_dir(dir_path)
