@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "topolun_page_loader"
-version = "0.3.0"
+version = "0.3.1"
 description = "Download page"
 authors = ["Topolun <you@example.com>"]
 packages = [  { include = "page_loader" }, ]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
