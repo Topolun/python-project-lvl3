@@ -12,9 +12,15 @@ SELECTORS = {
     'img': 'src'
 }
 
+BINARY_FILES = (
+    '.png', '.gif', '.jpg', '.tiff',
+    '.bmp', '.DS_Store', '.eot', '.otf',
+    '.ttf', '.woff', '.rgb', '.ico',
+    )
+
 
 def run(page_adress, output):
-    page_data = page_load(page_adress)
+    page_data, binary = page_load(page_adress)
     dir_name = get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     create_dir(dir_path)
@@ -24,19 +30,26 @@ def run(page_adress, output):
         dir_path,
         )
     file_name = get_name(page_adress)
+    message = "Page saved at path: '{}'\nwith name: '{}'".format(
+        os.path.abspath(output), file_name
+        )
     bar = Bar('Processing', max=len(links_for_download) + 1)
     write_file(
         os.path.join(output, file_name),
+        binary,
         str(page_soup),
         )
     bar.next()
     for link in links_for_download:
-        download(link, dir_path)
+        file_data, binary = page_load(link)
+        file_name = get_name(link)
+        write_file(
+            os.path.join(dir_path, file_name),
+            binary,
+            file_data,
+            )
         bar.next()
     bar.finish()
-    message = "Page saved at path: '{}'\nwith name: '{}'".format(
-        os.path.abspath(output), file_name
-        )
     print(message)
     return None
 
@@ -49,10 +62,12 @@ def content_filter(tag):
 
 def page_load(page_adress):
     try:
+        _, ext = os.path.splitext(page_adress)
+        binary = ext in BINARY_FILES
         page_data = requests.get(page_adress)
         status = page_data.status_code
         if status == 200:
-            return page_data
+            return page_data.content, binary
         else:
             raise KnownError(
                 "can't get access to the page {}. code is {}"
@@ -83,10 +98,11 @@ def get_name(page_adress, output='file'):
     return name
 
 
-def write_file(path, data=''):
+def write_file(path, binary, data=''):
     open_method = 'wb'
-    if isinstance(data, str):
+    if not binary:
         open_method = 'w'
+        data = str(data)
     try:
         with open(path, open_method) as new_file:
             new_file.write(data)
@@ -107,7 +123,7 @@ def create_dir(dir_path):
 
 
 def change_HTML(page_data, page_adress, dir_path):
-    page_soup = BeautifulSoup(page_data.content, features="html.parser")
+    page_soup = BeautifulSoup(page_data, features="html.parser")
     tags = page_soup.find_all(content_filter)
     links_for_download = []
     for tag in tags:
@@ -120,13 +136,3 @@ def change_HTML(page_data, page_adress, dir_path):
         file_name = get_name(normalized_path)
         tag[attr] = os.path.join(dir_path, file_name)
     return page_soup, links_for_download
-
-
-def download(links_for_download, output):
-    file_name = get_name(links_for_download)
-    file_data = page_load(links_for_download)
-    write_file(
-        os.path.join(output, file_name),
-        file_data.content,
-        )
-    return None
