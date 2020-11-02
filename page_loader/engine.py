@@ -63,11 +63,14 @@ def content_filter(tag):
 def page_load(page_adress):
     try:
         _, ext = os.path.splitext(page_adress)
-        binary = ext in BINARY_FILES
+        is_binary = ext in BINARY_FILES
         page_data = requests.get(page_adress)
         status = page_data.status_code
         if status == 200:
-            return page_data.content, binary
+            if is_binary:
+                return page_data.content, is_binary
+            else:
+                return page_data.text, is_binary
         else:
             raise KnownError(
                 "can't get access to the page {}. code is {}"
@@ -102,7 +105,6 @@ def write_file(path, binary, data=''):
     open_method = 'wb'
     if not binary:
         open_method = 'w'
-        data = str(data)
     try:
         with open(path, open_method) as new_file:
             new_file.write(data)
