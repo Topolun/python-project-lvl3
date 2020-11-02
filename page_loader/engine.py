@@ -18,49 +18,33 @@ def run(page_adress, output):
     dir_name = get_name(page_adress, output='dir')
     dir_path = os.path.join(output, dir_name)
     create_dir(dir_path)
-    page_soup = BeautifulSoup(page_data.content, features="html.parser")
-    tags = page_soup.find_all(content_filter)
-    bar = Bar('Processing', max=len(tags))
-    for tag in tags:
-        attr = SELECTORS.get(tag.name)
-        normalized_path = path_normalize_for_download(
-            tag[attr], page_adress
-            )
-        file_name = get_name(normalized_path)
-        file_data = page_load(normalized_path)
-        write_file(
-            os.path.join(dir_path, file_name),
-            file_data.content,
-            )
-        tag[attr] = os.path.join(dir_path, file_name)
-        bar.next()
-    bar.finish()
+    page_soup, links_for_download = change_HTML(
+        page_data,
+        page_adress,
+        dir_path,
+        )
     file_name = get_name(page_adress)
+    bar = Bar('Processing', max=len(links_for_download) + 1)
     write_file(
         os.path.join(output, file_name),
         str(page_soup),
         )
+    bar.next()
+    for link in links_for_download:
+        download(link, dir_path)
+        bar.next()
+    bar.finish()
     message = "Page saved at path: '{}'\nwith name: '{}'".format(
         os.path.abspath(output), file_name
         )
     print(message)
-    return message
+    return None
 
 
 def content_filter(tag):
     name = tag.name
     attr = SELECTORS.get(name)
     return name in SELECTORS and tag.has_attr(attr)
-
-
-def path(path):
-    if os.path.isdir(path):
-        return path
-    else:
-        raise KnownError(
-            "Path '{}' does not exist. Please choose correct one"
-            .format(path)
-            )
 
 
 def page_load(page_adress):
@@ -99,10 +83,6 @@ def get_name(page_adress, output='file'):
     return name
 
 
-def path_normalize_for_download(path, page_adress):
-    return urllib.parse.urljoin(page_adress, path)
-
-
 def write_file(path, data=''):
     open_method = 'wb'
     if isinstance(data, str):
@@ -124,3 +104,29 @@ def create_dir(dir_path):
             raise KnownError(
                 "can't write file {}".format(dir_path)
             ) from err
+
+
+def change_HTML(page_data, page_adress, dir_path):
+    page_soup = BeautifulSoup(page_data.content, features="html.parser")
+    tags = page_soup.find_all(content_filter)
+    links_for_download = []
+    for tag in tags:
+        attr = SELECTORS.get(tag.name)
+        normalized_path = urllib.parse.urljoin(
+            page_adress,
+            tag[attr],
+            )
+        links_for_download.append(normalized_path)
+        file_name = get_name(normalized_path)
+        tag[attr] = os.path.join(dir_path, file_name)
+    return page_soup, links_for_download
+
+
+def download(links_for_download, output):
+    file_name = get_name(links_for_download)
+    file_data = page_load(links_for_download)
+    write_file(
+        os.path.join(output, file_name),
+        file_data.content,
+        )
+    return None

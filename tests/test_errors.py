@@ -15,11 +15,6 @@ def test_page_load():
         engine.page_load('https://httpbin.org/status/400')
 
 
-def test_directory_availability():
-    with pytest.raises(KnownError):
-        engine.path('u://asdasdsa/dasasdqw/324')
-
-
 def test_write_access_dir():
     with pytest.raises(KnownError):
         with tempfile.TemporaryDirectory() as tmp_dir:
