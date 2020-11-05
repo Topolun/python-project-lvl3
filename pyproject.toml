@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "topolun_page_loader"
-version = "0.3.1"
+version = "0.3.2"
 description = "Download page"
 authors = ["Topolun <you@example.com>"]
 packages = [  { include = "page_loader" }, ]

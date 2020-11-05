@@ -14,25 +14,25 @@
 To save page in othe place, please add '`--output path_to_save_file`'.
 
 
-[![asciicast](https://asciinema.org/a/Fa0Q6wvTF6Xm7iQ6Y6q5JztCa.svg)](https://asciinema.org/a/Fa0Q6wvTF6Xm7iQ6Y6q5JztCa)
+[![asciicast](https://asciinema.org/a/vEkk3usCM9TVI8g0KLdx3OjRg.svg)](https://asciinema.org/a/vEkk3usCM9TVI8g0KLdx3OjRg)
 
 
 - All local resources from page tags like '`link`', '`script`' and '`img`' are downloaded to a local directory in the same place as the main file.
 
-[![asciicast](https://asciinema.org/a/hjCvkV962YxwEb0GrOA2tQxAr.svg)](https://asciinema.org/a/hjCvkV962YxwEb0GrOA2tQxAr)
+[![asciicast](https://asciinema.org/a/4ERPWLTwY5P6OVKY2gPBtTyle.svg)](https://asciinema.org/a/4ERPWLTwY5P6OVKY2gPBtTyle)
 
 - You may set a level of logging in the cli. just add '`-L`' or '`--log`' ang choose a level of logging. You can choose from `CRITICAL`, `ERROR`, `WARNING`, `INFO` and `DEBUG` levels. 
 **Example:**
 
-    page_loader https://hexlet.io/courses --log INFO
+    page_loader https://hexlet.io/courses --log DEBUG
 
-[![asciicast](https://asciinema.org/a/UoEl5SuNZWzS1IFDcuyAlYsDZ.svg)](https://asciinema.org/a/UoEl5SuNZWzS1IFDcuyAlYsDZ)
+[![asciicast](https://asciinema.org/a/OU52AwcyUZInjo6uClGzJ1GaD.svg)](https://asciinema.org/a/OU52AwcyUZInjo6uClGzJ1GaD)
 
 - If something goes wrong, this cli inform you about that.
 
-[![asciicast](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY.svg)](https://asciinema.org/a/jsFhZG0UHxd15pNeIMym8SbXY)
+[![asciicast](https://asciinema.org/a/syCfyvhVZimuMAW8ca7pM0eJ5.svg)](https://asciinema.org/a/syCfyvhVZimuMAW8ca7pM0eJ5)
 
 
 - You can see a progress of the download as progress bar
 
-[![asciicast](https://asciinema.org/a/6yU7WvspOpyNKpXCHzx8lAWlV.svg)](https://asciinema.org/a/6yU7WvspOpyNKpXCHzx8lAWlV)
+[![asciicast](https://asciinema.org/a/vEkk3usCM9TVI8g0KLdx3OjRg.svg)](https://asciinema.org/a/vEkk3usCM9TVI8g0KLdx3OjRg)
