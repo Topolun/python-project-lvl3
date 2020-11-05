@@ -17,7 +17,6 @@ TEST_DATA = {
 
 def test_download_page():
     with tempfile.TemporaryDirectory() as tmp_dir:
-        print('PATH IS -----   ', tmp_dir)
         page = 'https://topolun.github.io/test_download/'
         engine.run(page, tmp_dir)
         with open(FIXTURES.get('css')) as correct_answer:
